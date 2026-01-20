@@ -1,17 +1,15 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { COUNTRIES } from './constants';
+import { SLIDES } from './constants';
 import AnimatedBackground from './components/AnimatedBackground';
 import Navigation from './components/Navigation';
 import HeroSection from './components/HeroSection';
-import CountrySlide from './components/CountrySlide';
-import RankingSlide from './components/RankingSlide';
+import InfoSlide from './components/InfoSlide';
 
 const App: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentSection, setCurrentSection] = useState(0);
 
-  // Calculate total sections: Hero + Countries + Ranking
-  const totalSections = 1 + COUNTRIES.length + 1;
+  const totalSections = SLIDES.length;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -54,26 +52,19 @@ const App: React.FC = () => {
         ref={containerRef}
         className="h-screen w-full overflow-y-scroll snap-y snap-mandatory scroll-smooth no-scrollbar"
       >
-        {/* Section 1: Hero */}
-        <section className="h-screen w-full snap-start relative flex items-center justify-center">
-          <HeroSection scrollContainerRef={containerRef} />
-        </section>
-
-        {/* Sections 2-N: Countries */}
-        {COUNTRIES.map((country) => (
-          <section key={country.id} className="h-screen w-full snap-start relative">
-             <CountrySlide data={country} />
+        {SLIDES.map((slide) => (
+          <section key={slide.id} className="h-screen w-full snap-start relative">
+             {slide.type === 'hero' ? (
+                <HeroSection scrollContainerRef={containerRef} data={slide} />
+             ) : (
+                <InfoSlide data={slide} />
+             )}
           </section>
         ))}
 
-        {/* Final Section: Ranking */}
-        <section className="h-screen w-full snap-start relative">
-          <RankingSlide />
-        </section>
-
-        {/* Footer/Contact Info (Optional small strip) */}
+        {/* Footer/Contact Info */}
         <div className="absolute bottom-4 left-0 w-full text-center text-xs text-white/20 pointer-events-none z-50">
-          تم التصميم باستخدام تقنيات React & Tailwind
+          ديلارا | 2025
         </div>
       </div>
     </div>

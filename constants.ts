@@ -24,7 +24,8 @@ export const SLIDES: SlideData[] = [
       "عمري 26 سنة",
       "أنا من تركيا"
     ],
-    image: "https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?q=80&w=1000&auto=format&fit=crop", // Placeholder for Dilara/Generic
+    // Updated: Reliable generic traveler image (Sunset/Woman/Travel)
+    image: "https://images.unsplash.com/photo-1504593811423-6dd665756598?q=80&w=1920&auto=format&fit=crop",
     color: "rose"
   },
   {
@@ -36,7 +37,8 @@ export const SLIDES: SlideData[] = [
       "أدرس وأتعلم اللغة العربية",
       "أتعرف على الثقافة السعودية والحياة هنا"
     ],
-    image: "https://images.unsplash.com/photo-1586724237569-f3d0c1dee8c6?q=80&w=1920&auto=format&fit=crop", // Riyadh
+    // Updated: Reliable high-quality Riyadh Kingdom Centre image
+    image: "https://images.unsplash.com/photo-1586724237569-f3d0c1dee8c6?q=80&w=1920&auto=format&fit=crop",
     color: "emerald",
     coordinates: [24.7136, 46.6753] // Riyadh Coordinates
   },
@@ -99,7 +101,8 @@ export const SLIDES: SlideData[] = [
       "بحر أزرق",
       "مدينة نشيطة وحيوية"
     ],
-    image: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?q=80&w=1920&auto=format&fit=crop", // Antalya
+    // Antalya/Kaputas Beach
+    image: "https://images.unsplash.com/photo-1519451241324-20b4ea2c4220?q=80&w=1920&auto=format&fit=crop",
     color: "blue",
     coordinates: [36.8841, 30.7056]
   },
@@ -125,7 +128,8 @@ export const SLIDES: SlideData[] = [
       "شوارع تاريخية",
       "ذكريات جميلة بالنسبة لي"
     ],
-    image: "https://images.unsplash.com/photo-1533552097241-e9455325c8d6?q=80&w=1920&auto=format&fit=crop", // Kyrenia
+    // Updated: Girne (Kyrenia) Harbour - Specific North Cyprus shot
+    image: "https://letocoinvestment.com/wp-content/uploads/2023/07/Kyrenia-View-e1689269979734.webp",
     color: "teal",
     coordinates: [35.3364, 33.3184]
   },

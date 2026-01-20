@@ -56,7 +56,7 @@ const App: React.FC = () => {
       >
         {/* Section 1: Hero */}
         <section className="h-screen w-full snap-start relative flex items-center justify-center">
-          <HeroSection />
+          <HeroSection scrollContainerRef={containerRef} />
         </section>
 
         {/* Sections 2-N: Countries */}

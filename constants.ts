@@ -13,6 +13,14 @@ export const TRAVEL_PHILOSOPHY: TravelPhilosophy = {
   ]
 };
 
+// =====================================================================
+// تعليمات تغيير الصور:
+// لتغيير الصور واستخدام صورك الخاصة بشكل دائم:
+// 1. قم برفع صورك على موقع استضافة صور (مثل Imgur أو Google Photos رابط مباشر)
+// 2. انسخ رابط الصورة (يجب أن ينتهي بـ .jpg أو .png للحصول على أفضل النتائج)
+// 3. استبدل الروابط الموجودة داخل خاصية "image" أدناه بروابط صورك
+// =====================================================================
+
 export const TOP_CITIES: City[] = [
   {
     name: "إسطنبول",
@@ -31,6 +39,12 @@ export const TOP_CITIES: City[] = [
     rank: 3,
     description: "هدوء النفس. الميناء القديم الساحر، والعشاء على ضوء الشموع بجانب القلعة.",
     image: "https://images.unsplash.com/photo-1533552097241-e9455325c8d6?q=80&w=800&auto=format&fit=crop"
+  },
+  {
+    name: "كابادوكيا",
+    rank: 4,
+    description: "أرض السحر والمناطيد. مشهد شروق الشمس فوق الوديان الصخرية لا مثيل له في العالم.",
+    image: "https://images.unsplash.com/photo-1641128324972-af3212f0f6bd?q=80&w=800&auto=format&fit=crop"
   }
 ];
 
@@ -44,7 +58,8 @@ export const COUNTRIES: CountryData[] = [
     image: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?q=80&w=1920&auto=format&fit=crop",
     color: "rose",
     badge: "الوجهة المتكاملة",
-    highlights: ["جلسات البوسفور", "التسوق الفاخر", "الإفطار التركي", "أجواء تقسيم ليلاً"]
+    highlights: ["جلسات البوسفور", "التسوق الفاخر", "الإفطار التركي", "أجواء تقسيم ليلاً"],
+    coordinates: [38.9637, 35.2433]
   },
   {
     id: "cyprus",
@@ -55,7 +70,8 @@ export const COUNTRIES: CountryData[] = [
     image: "https://images.unsplash.com/photo-1574880063229-30df768f6c38?q=80&w=1920&auto=format&fit=crop",
     color: "amber",
     badge: "جزيرة الاسترخاء",
-    highlights: ["ميناء جيرني القديم", "قلعة سانت هيلاريون", "الشواطئ الرملية", "الأجواء الليلية الهادئة"]
+    highlights: ["ميناء جيرني القديم", "قلعة سانت هيلاريون", "الشواطئ الرملية", "الأجواء الليلية الهادئة"],
+    coordinates: [35.1856, 33.3823]
   },
   {
     id: "jordan",
@@ -66,7 +82,8 @@ export const COUNTRIES: CountryData[] = [
     image: "https://images.unsplash.com/photo-1575373307137-5615173e3576?q=80&w=1920&auto=format&fit=crop",
     color: "red",
     badge: "أرض النشامى",
-    highlights: ["البتراء (المدينة الوردية)", "تخييم وادي رم", "المنسف الأصلي", "البحر الميت"]
+    highlights: ["البتراء (المدينة الوردية)", "تخييم وادي رم", "المنسف الأصلي", "البحر الميت"],
+    coordinates: [30.5852, 36.2384]
   },
   {
     id: "saudi",
@@ -77,7 +94,8 @@ export const COUNTRIES: CountryData[] = [
     image: "https://images.unsplash.com/photo-1586724237569-f3d0c1dee8c6?q=80&w=1920&auto=format&fit=crop",
     color: "emerald",
     badge: "مملكة المستقبل",
-    highlights: ["موسم الرياض", "تاريخ العلا", "القهوة والكرم", "تطور البوليفارد"]
+    highlights: ["موسم الرياض", "تاريخ العلا", "القهوة والكرم", "تطور البوليفارد"],
+    coordinates: [23.8859, 45.0792]
   },
   {
     id: "qatar",
@@ -88,6 +106,7 @@ export const COUNTRIES: CountryData[] = [
     image: "https://images.unsplash.com/photo-1595180665042-8d7698a8535a?q=80&w=1920&auto=format&fit=crop",
     color: "fuchsia",
     badge: "لؤلؤة الرفاهية",
-    highlights: ["سوق واقف", "جزيرة اللؤلؤة", "متحف الفن الإسلامي", "مولات فاندوم والحزم"]
+    highlights: ["سوق واقف", "جزيرة اللؤلؤة", "متحف الفن الإسلامي", "مولات فاندوم والحزم"],
+    coordinates: [25.3548, 51.1839]
   }
 ];

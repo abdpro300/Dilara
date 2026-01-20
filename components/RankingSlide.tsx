@@ -4,12 +4,15 @@ import { TOP_CITIES } from '../constants';
 import { Trophy, Heart, ArrowUp } from 'lucide-react';
 
 const RankingSlide: React.FC = () => {
+  // Sort cities by rank (1 to 4)
+  const sortedCities = [...TOP_CITIES].sort((a, b) => a.rank - b.rank);
+
   return (
     <div className="h-full w-full bg-slate-950 relative overflow-hidden flex flex-col items-center justify-center p-6">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-indigo-950/40 via-slate-950 to-slate-950"></div>
       
       <motion.div 
-        className="z-10 text-center mb-12"
+        className="z-10 text-center mb-8 md:mb-12"
         initial={{ y: -50, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
       >
@@ -20,17 +23,40 @@ const RankingSlide: React.FC = () => {
         <p className="text-slate-400 text-xl">ترتيب القائمة الذهبية لرحلاتي</p>
       </motion.div>
 
-      <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-6 z-10 items-end">
-        
-        {/* Rank 2: Antalya */}
-        <CityCard city={TOP_CITIES[1]} color="cyan" delay={0.4} heightClass="h-[400px]" />
+      {/* Grid Layout for 4 items */}
+      <div className="w-full max-w-7xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 z-10 items-end">
+        {sortedCities.map((city) => {
+            const isWinner = city.rank === 1;
+            
+            // Dynamic styling based on rank
+            let heightClass = 'h-[350px]';
+            let color = 'slate';
+            
+            if (city.rank === 1) {
+                heightClass = 'h-[500px]';
+                color = 'yellow';
+            } else if (city.rank === 2) {
+                heightClass = 'h-[440px]';
+                color = 'cyan';
+            } else if (city.rank === 3) {
+                heightClass = 'h-[400px]';
+                color = 'rose';
+            } else {
+                heightClass = 'h-[360px]';
+                color = 'amber';
+            }
 
-        {/* Rank 1: Istanbul */}
-        <CityCard city={TOP_CITIES[0]} color="yellow" delay={0.2} heightClass="h-[480px]" isWinner />
-
-        {/* Rank 3: Girne */}
-        <CityCard city={TOP_CITIES[2]} color="rose" delay={0.6} heightClass="h-[350px]" />
-        
+            return (
+                <CityCard 
+                    key={city.rank} 
+                    city={city} 
+                    color={color} 
+                    delay={0.2 * city.rank} 
+                    heightClass={heightClass} 
+                    isWinner={isWinner} 
+                />
+            );
+        })}
       </div>
     </div>
   );
@@ -42,7 +68,7 @@ const CityCard: React.FC<{ city: any; color: string; delay: number; heightClass:
       initial={{ y: 200, opacity: 0 }}
       whileInView={{ y: 0, opacity: 1 }}
       transition={{ type: "spring", stiffness: 100, damping: 20, delay }}
-      className={`relative rounded-2xl overflow-hidden group ${heightClass} ${isWinner ? 'md:-mt-12 shadow-[0_0_50px_rgba(234,179,8,0.3)] ring-2 ring-yellow-500/50' : ''}`}
+      className={`relative rounded-2xl overflow-hidden group ${heightClass} ${isWinner ? 'md:-mt-12 shadow-[0_0_50px_rgba(234,179,8,0.3)] ring-2 ring-yellow-500/50' : 'hover:shadow-[0_0_30px_rgba(255,255,255,0.1)]'}`}
     >
       <img src={city.image} alt={city.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
       <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/60 to-transparent"></div>
@@ -51,11 +77,11 @@ const CityCard: React.FC<{ city: any; color: string; delay: number; heightClass:
         <div className={`inline-flex items-center justify-center w-12 h-12 rounded-full bg-${color}-500 text-white font-bold text-xl mb-4 shadow-lg`}>
           #{city.rank}
         </div>
-        <h3 className="text-3xl font-bold text-white mb-2 flex items-center gap-2">
+        <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 flex items-center gap-2">
           {city.name}
           {isWinner && <Heart className="fill-red-500 text-red-500 animate-pulse" />}
         </h3>
-        <p className="text-slate-300 text-sm md:text-base leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-4 group-hover:translate-y-0">
+        <p className="text-slate-300 text-sm leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-4 group-hover:translate-y-0">
           {city.description}
         </p>
       </div>

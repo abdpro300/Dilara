@@ -15,6 +15,7 @@ export interface CountryData {
   color: string; // Tailwind color class prefix (e.g., 'cyan', 'purple')
   highlights: string[];
   badge: string; // A unique title for the country based on preference
+  coordinates: [number, number]; // Latitude, Longitude for map
 }
 
 export interface TravelPhilosophy {

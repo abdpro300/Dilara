@@ -1,20 +1,40 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { HERO_TITLE, HERO_SUBTITLE, TRAVEL_PHILOSOPHY } from '../constants';
 import { Plane, Globe, Map } from 'lucide-react';
 
-const HeroSection: React.FC = () => {
+interface HeroSectionProps {
+  scrollContainerRef: React.RefObject<HTMLDivElement | null>;
+}
+
+const HeroSection: React.FC<HeroSectionProps> = ({ scrollContainerRef }) => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    container: scrollContainerRef,
+    target: sectionRef,
+    offset: ["start start", "end start"]
+  });
+
+  // Map scroll progress (0 to 1) to vertical position (0% to 40%)
+  // This makes the background move slower than the foreground (parallax)
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+
   return (
-    <div className="h-full w-full flex flex-col justify-center items-center relative p-8">
-      {/* Background Image Overlay */}
-      <div className="absolute inset-0 z-0">
+    <div ref={sectionRef} className="h-full w-full flex flex-col justify-center items-center relative p-8 overflow-hidden">
+      {/* Background Image Overlay with Parallax */}
+      <motion.div 
+        style={{ y, opacity }}
+        className="absolute inset-0 z-0"
+      >
         <img 
           src="https://picsum.photos/1920/1080?grayscale&blur=2" 
           alt="Background" 
-          className="w-full h-full object-cover opacity-20"
+          className="w-full h-full object-cover opacity-20 scale-125"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent"></div>
-      </div>
+      </motion.div>
 
       <div className="z-10 text-center max-w-4xl">
         <motion.div

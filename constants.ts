@@ -25,7 +25,7 @@ export const SLIDES: SlideData[] = [
       "أنا من تركيا"
     ],
     // Updated: Reliable generic traveler image (Sunset/Woman/Travel)
-    image: "https://images.unsplash.com/photo-1504593811423-6dd665756598?q=80&w=1920&auto=format&fit=crop",
+    image: "/IMG_4633.jpg",
     color: "rose"
   },
   {

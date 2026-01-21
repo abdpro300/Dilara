@@ -4,6 +4,7 @@ import AnimatedBackground from './components/AnimatedBackground';
 import Navigation from './components/Navigation';
 import HeroSection from './components/HeroSection';
 import InfoSlide from './components/InfoSlide';
+import PhotoGallerySlide from './components/PhotoGallerySlide';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
@@ -14,6 +15,7 @@ const App: React.FC = () => {
   const pdfContainerRef = useRef<HTMLDivElement>(null);
   const [currentSection, setCurrentSection] = useState(0);
   const [isExporting, setIsExporting] = useState(false);
+  const [exportProgress, setExportProgress] = useState(0);
 
   const { scrollYProgress } = useScroll({ container: containerRef });
   const scaleX = useSpring(scrollYProgress, {
@@ -53,9 +55,10 @@ const App: React.FC = () => {
   const handleGeneratePDF = async () => {
     if (isExporting || !pdfContainerRef.current) return;
     setIsExporting(true);
+    setExportProgress(0);
 
-    // Wait a brief moment for the hidden container to render fully with "isStatic" props active
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    // 1. Allow React to render the hidden container
+    await new Promise(resolve => setTimeout(resolve, 500));
 
     try {
       const pdf = new jsPDF({
@@ -64,34 +67,71 @@ const App: React.FC = () => {
         format: [1920, 1080] // Match slide resolution
       });
 
-      const slides = pdfContainerRef.current.children;
+      const container = pdfContainerRef.current;
+
+      // 2. Wait for Fonts to be ready
+      await document.fonts.ready;
+
+      // 3. Wait for all Images inside the hidden container to load
+      const images = Array.from(container.querySelectorAll('img'));
+      const imagePromises = images.map((img) => {
+        if (img.complete) return Promise.resolve();
+        return new Promise((resolve) => {
+          img.onload = resolve;
+          img.onerror = resolve; // Don't block if one fails
+        });
+      });
+      await Promise.all(imagePromises);
+
+      // 4. Extra stabilization time for layout/rendering
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
+      const slides = container.children;
+      const totalSlides = slides.length;
       
-      for (let i = 0; i < slides.length; i++) {
+      for (let i = 0; i < totalSlides; i++) {
+        setExportProgress(Math.round(((i + 1) / totalSlides) * 100));
         const slideElement = slides[i] as HTMLElement;
         
         // Capture the slide
         const canvas = await html2canvas(slideElement, {
-            scale: 1, // 1:1 scale since we set div to 1920x1080
+            scale: 1.5, // Higher scale for better text clarity
             useCORS: true,
             allowTaint: true,
-            backgroundColor: '#0f172a' // Slate-950
+            backgroundColor: '#0f172a', // Slate-950
+            logging: false,
+            // Ensure we capture the full size
+            width: 1920,
+            height: 1080,
+            windowWidth: 1920,
+            windowHeight: 1080
         });
 
-        const imgData = canvas.toDataURL('image/jpeg', 0.9);
+        // Add to PDF
+        const imgData = canvas.toDataURL('image/jpeg', 0.8); // Slightly compressed for file size
 
         if (i > 0) {
             pdf.addPage([1920, 1080], 'landscape');
         }
         
         pdf.addImage(imgData, 'JPEG', 0, 0, 1920, 1080);
+
+        // Add Page Number (Skipping the Title Page at index 0)
+        if (i > 0) {
+           pdf.setFontSize(24);
+           pdf.setTextColor(255, 255, 255);
+           // Add a small shadow/stroke effect for readability
+           pdf.text(`${i + 1} / ${totalSlides}`, 1820, 1040, { align: 'right' });
+        }
       }
 
-      pdf.save('dilara-journey.pdf');
+      pdf.save('Dilara_Journey_Presentation.pdf');
     } catch (error) {
         console.error("PDF Generation failed", error);
-        alert("Failed to generate PDF. Check console.");
+        alert("Failed to generate PDF. Check console for details.");
     } finally {
         setIsExporting(false);
+        setExportProgress(0);
     }
   };
 
@@ -120,36 +160,60 @@ const App: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [currentSection, totalSections, isExporting]);
 
+  const renderSlide = (slide: typeof SLIDES[0], isStatic = false) => {
+    if (slide.type === 'hero') {
+      return <HeroSection data={slide} isStatic={isStatic} scrollContainerRef={isStatic ? undefined : containerRef} />;
+    }
+    if (slide.type === 'gallery') {
+      return <PhotoGallerySlide data={slide} isStatic={isStatic} />;
+    }
+    return <InfoSlide data={slide} isStatic={isStatic} />;
+  };
+
   return (
     <div className="relative w-full h-screen text-white font-sans overflow-hidden bg-slate-950">
       <AnimatedBackground />
       
       {/* Loading Overlay for PDF */}
       {isExporting && (
-        <div className="fixed inset-0 z-[9999] bg-black/80 backdrop-blur-md flex flex-col items-center justify-center">
-            <Loader2 size={64} className="text-cyan-400 animate-spin mb-4" />
-            <h2 className="text-2xl font-bold text-white">Generating PDF...</h2>
-            <p className="text-slate-400">Rendering {totalSections} slides. Please wait.</p>
+        <div className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-xl flex flex-col items-center justify-center">
+            <div className="relative">
+                <Loader2 size={80} className="text-cyan-400 animate-spin mb-6" />
+                <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xs font-bold text-white">
+                    {exportProgress}%
+                </span>
+            </div>
+            <h2 className="text-3xl font-bold text-white mb-2 font-cairo">جاري تجهيز العرض...</h2>
+            <p className="text-slate-400 font-cairo">يرجى الانتظار، يتم تصدير {totalSections} شريحة بجودة عالية</p>
         </div>
       )}
 
       {/* Hidden Container for PDF Rendering */}
-      {/* We keep it in DOM but off-screen to ensure accurate capture */}
       <div 
         ref={pdfContainerRef}
-        className="fixed top-0 left-[-10000px] z-[-10]"
+        className="fixed top-0 left-0 z-[-10]"
         style={{ 
             width: '1920px', 
-            visibility: isExporting ? 'visible' : 'hidden' 
+            height: '1080px',
+            transform: isExporting ? 'translateX(0)' : 'translateX(-200vw)',
+            opacity: isExporting ? 1 : 0, 
+            pointerEvents: 'none',
+            position: 'fixed'
         }}
       >
         {isExporting && SLIDES.map((slide) => (
-            <div key={`pdf-${slide.id}`} style={{ width: '1920px', height: '1080px', position: 'relative', overflow: 'hidden', background: '#0f172a' }}>
-                 {slide.type === 'hero' ? (
-                    <HeroSection data={slide} isStatic={true} />
-                 ) : (
-                    <InfoSlide data={slide} isStatic={true} />
-                 )}
+            <div 
+                key={`pdf-${slide.id}`} 
+                style={{ 
+                    width: '1920px', 
+                    height: '1080px', 
+                    position: 'relative', 
+                    overflow: 'hidden', 
+                    background: '#0f172a',
+                    direction: 'rtl' 
+                }}
+            >
+                 {renderSlide(slide, true)}
             </div>
         ))}
       </div>
@@ -175,11 +239,7 @@ const App: React.FC = () => {
       >
         {SLIDES.map((slide) => (
           <section key={slide.id} className="h-screen w-full snap-start relative perspective-1000">
-             {slide.type === 'hero' ? (
-                <HeroSection scrollContainerRef={containerRef} data={slide} />
-             ) : (
-                <InfoSlide data={slide} />
-             )}
+             {renderSlide(slide, false)}
           </section>
         ))}
 

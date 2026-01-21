@@ -1,12 +1,13 @@
 export interface SlideData {
   id: number;
-  type: 'hero' | 'standard' | 'city' | 'conclusion';
+  type: 'hero' | 'standard' | 'city' | 'conclusion' | 'gallery';
   title: string;
   subtitle?: string;
   bullets: string[];
   image: string;
   color: string; // Tailwind color class prefix (e.g., 'cyan', 'purple')
   coordinates?: [number, number]; // Optional: Only for slides that need a map
+  galleryImages?: string[]; // Optional: For gallery slides
 }
 
 // Deprecated interfaces kept to avoid immediate breakage if referenced elsewhere, 

@@ -81,7 +81,7 @@ export const SLIDES: SlideData[] = [
   },
   {
     id: 7,
-    type: 'standard',
+    type: 'city', // Changed to city type for consistency if needed, but standard works too. keeping standard as per original
     title: "مدني المفضلة (نظرة عامة)",
     subtitle: "مدني المفضلة هي:",
     bullets: [
@@ -106,6 +106,20 @@ export const SLIDES: SlideData[] = [
     color: "blue",
     coordinates: [36.8841, 30.7056]
   },
+  // ANTALYA GALLERY
+  {
+    id: 14,
+    type: 'gallery',
+    title: "معرض أنطاليا", 
+    bullets: [],
+    image: "", 
+    color: "blue",
+    galleryImages: [
+      "/Antalya.jpeg", // Old Harbor / Marina
+      "/Antalya1.jpeg",  // Resort/Pool Vibe
+      "/Antalya2.jpeg"
+    ]
+  },
   {
     id: 9,
     type: 'city',
@@ -118,6 +132,20 @@ export const SLIDES: SlideData[] = [
     image: "https://images.unsplash.com/photo-1641128324972-af3212f0f6bd?q=80&w=1920&auto=format&fit=crop", // Cappadocia
     color: "orange",
     coordinates: [38.6431, 34.8289]
+  },
+  // CAPPADOCIA GALLERY
+  {
+    id: 15,
+    type: 'gallery',
+    title: "معرض كابادوكيا",
+    bullets: [],
+    image: "",
+    color: "orange",
+    galleryImages: [
+      "kp1.jpeg", // Massive Balloons Sunrise
+      "kp2.jpeg", // Carpet/Rug Shop
+      "kp3.jpeg", // Fairy Chimneys
+    ]
   },
   {
     id: 10,
@@ -132,6 +160,20 @@ export const SLIDES: SlideData[] = [
     image: "https://letocoinvestment.com/wp-content/uploads/2023/07/Kyrenia-View-e1689269979734.webp",
     color: "teal",
     coordinates: [35.3364, 33.3184]
+  },
+  // KYRENIA GALLERY
+  {
+    id: 16,
+    type: 'gallery',
+    title: "معرض كيرينيا",
+    bullets: [],
+    image: "",
+    color: "teal",
+    galleryImages: [
+      "kn1.jpeg", // Bellapais Abbey Area
+      "kn2.jpeg", // Mediterranean Coast/Sea Caves
+      "kn3.jpeg"  // Old Stone Streets/Sunny
+    ]
   },
   {
     id: 11,

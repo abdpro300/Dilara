@@ -1,6 +1,7 @@
+
 export interface SlideData {
   id: number;
-  type: 'hero' | 'standard' | 'city' | 'conclusion' | 'gallery';
+  type: 'hero' | 'standard' | 'city' | 'conclusion' | 'gallery' | 'video';
   title: string;
   subtitle?: string;
   bullets: string[];
@@ -8,6 +9,7 @@ export interface SlideData {
   color: string; // Tailwind color class prefix (e.g., 'cyan', 'purple')
   coordinates?: [number, number]; // Optional: Only for slides that need a map
   galleryImages?: string[]; // Optional: For gallery slides
+  videoUrl?: string; // Optional: For video slides
 }
 
 // Deprecated interfaces kept to avoid immediate breakage if referenced elsewhere, 

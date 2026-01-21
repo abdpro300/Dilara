@@ -21,87 +21,88 @@ const InfoSlide: React.FC<Props> = ({ data, isStatic = false }) => {
   const isCity = data.type === 'city';
 
   // --- Unique Animation Logic per Slide ID ---
-  // UPDATED: Removed clipPath and maskImage animations which cause issues in Chrome
   const getUniqueVariants = (id: number): SlideVariants => {
     switch (id) {
       case 2: // Who Am I: "The Bloom"
         return {
           container: { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.3 } } },
-          item: { hidden: { opacity: 0, scale: 0.95, x: -20 }, show: { opacity: 1, scale: 1, x: 0, transition: { type: "spring", bounce: 0.4 } } },
-          image: { hidden: { opacity: 0, scale: 1.05 }, show: { opacity: 1, scale: 1, transition: { duration: 1.2 } } },
+          item: { hidden: { opacity: 0, scale: 0.5, rotate: -10 }, show: { opacity: 1, scale: 1, rotate: 0, transition: { type: "spring", bounce: 0.6 } } },
+          // Changed to simpler opacity/scale to avoid stuck hidden state
+          image: { hidden: { opacity: 0, scale: 1.1 }, show: { opacity: 1, scale: 1, transition: { duration: 1.2 } } },
           wrapperClass: "origin-center"
         };
       case 3: // Riyadh: "The Mirage"
         return {
           container: { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.2 } } },
-          item: { hidden: { opacity: 0, y: 30 }, show: { opacity: 1, y: 0, transition: { type: "spring", damping: 20 } } },
-          image: { hidden: { opacity: 0, y: 30 }, show: { opacity: 1, y: 0, transition: { duration: 1 } } },
+          item: { hidden: { opacity: 0, y: 50 }, show: { opacity: 1, y: 0, transition: { type: "spring", damping: 20 } } },
+          // Changed from y: "100%" to safer clip-path/opacity reveal to ensure layout presence
+          image: { hidden: { opacity: 0, y: 50 }, show: { opacity: 1, y: 0, transition: { duration: 1 } } },
           wrapperClass: ""
         };
       case 4: // Personal: "The Snap"
         return {
           container: { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.15 } } },
-          item: { hidden: { opacity: 0, x: -30 }, show: { opacity: 1, x: 0, transition: { type: "spring", stiffness: 100 } } },
-          image: { hidden: { x: 50, opacity: 0 }, show: { x: 0, opacity: 1, transition: { duration: 1, ease: "easeInOut" } } },
+          item: { hidden: { opacity: 0, x: -50 }, show: { opacity: 1, x: 0, transition: { type: "spring", stiffness: 100 } } },
+          image: { hidden: { x: "50%", opacity: 0 }, show: { x: "0%", opacity: 1, transition: { duration: 1, ease: "easeInOut" } } },
           wrapperClass: ""
         };
       case 5: // Travels: "The Compass"
         return {
           container: { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.2 } } },
           item: { 
-            hidden: (i: number) => ({ opacity: 0, x: i % 2 === 0 ? 30 : -30 }), 
+            hidden: (i: number) => ({ opacity: 0, x: i % 2 === 0 ? 50 : -50 }), 
             show: { opacity: 1, x: 0, transition: { type: "spring", damping: 12 } } 
           },
-          image: { hidden: { scale: 0.9, opacity: 0 }, show: { scale: 1, opacity: 1, transition: { duration: 1.2 } } },
+          image: { hidden: { scale: 0.8, rotate: 10, opacity: 0 }, show: { scale: 1, rotate: 0, opacity: 1, transition: { duration: 1.2 } } },
           wrapperClass: ""
         };
-      case 6: // Learned: "The Book" -> Simplified from 3D rotate to stable scale
+      case 6: // Learned: "The Book"
         return {
           container: { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.25 } } },
-          item: { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "backOut" } } },
-          image: { hidden: { opacity: 0, scale: 1.1 }, show: { opacity: 1, scale: 1, transition: { duration: 1.5 } } },
-          wrapperClass: ""
+          item: { hidden: { opacity: 0, rotateX: -90 }, show: { opacity: 1, rotateX: 0, transition: { duration: 0.8, ease: "backOut" } } },
+          image: { hidden: { opacity: 0, filter: "grayscale(100%)" }, show: { opacity: 1, filter: "grayscale(0%)", transition: { duration: 2 } } },
+          wrapperClass: "perspective-1000"
         };
       case 7: // Fav Cities: "The Gallery"
         return {
           container: { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.2 } } },
-          item: { hidden: { opacity: 0, filter: "blur(5px)" }, show: { opacity: 1, filter: "blur(0px)", transition: { duration: 0.8 } } },
-          image: { hidden: { opacity: 0, scale: 1.05 }, show: { opacity: 1, scale: 1, transition: { duration: 1.2 } } },
+          item: { hidden: { opacity: 0, filter: "blur(10px)" }, show: { opacity: 1, filter: "blur(0px)", transition: { duration: 0.8 } } },
+          image: { hidden: { opacity: 0, scale: 1.1 }, show: { opacity: 1, scale: 1, transition: { duration: 1.2 } } },
           wrapperClass: ""
         };
-      case 8: // Antalya: "The Wave" -> Changed from clipPath to Stable Fade/Slide
+      case 8: // Antalya: "The Wave"
         return {
           container: { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.3 } } },
           item: { hidden: { opacity: 0, x: -30, y: 20 }, show: { opacity: 1, x: 0, y: 0, transition: { type: "spring", mass: 1.2 } } },
-          image: { hidden: { opacity: 0, y: 50, scale: 1.1 }, show: { opacity: 1, y: 0, scale: 1, transition: { duration: 1.2, ease: "easeOut" } } },
+          image: { hidden: { clipPath: "circle(0% at 0% 100%)" }, show: { clipPath: "circle(150% at 0% 100%)", transition: { duration: 1.8, ease: "easeInOut" } } },
           wrapperClass: ""
         };
       case 9: // Cappadocia: "The Balloon"
         return {
           container: { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.5 } } },
-          item: { hidden: { opacity: 0, y: 30 }, show: { opacity: 1, y: 0, transition: { duration: 1, ease: "easeOut" } } },
-          image: { hidden: { opacity: 0, y: 30, scale: 0.95 }, show: { opacity: 1, y: 0, scale: 1, transition: { duration: 1.2 } } },
+          item: { hidden: { opacity: 0, y: 50 }, show: { opacity: 1, y: 0, transition: { duration: 1, ease: "easeOut" } } },
+          image: { hidden: { opacity: 0, y: 50, scale: 0.95 }, show: { opacity: 1, y: 0, scale: 1, transition: { duration: 1.5 } } },
           wrapperClass: ""
         };
-      case 10: // Kyrenia: "The Ancient" -> Changed from clipPath to Stable Fade/Slide
+      case 10: // Kyrenia: "The Ancient"
         return {
           container: { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.3 } } },
-          item: { hidden: { opacity: 0, x: -20 }, show: { opacity: 1, x: 0, transition: { duration: 1, ease: "circOut" } } },
-          image: { hidden: { opacity: 0, x: 50 }, show: { opacity: 1, x: 0, transition: { duration: 1.2, ease: "easeOut" } } },
+          item: { hidden: { opacity: 0, width: "0%" }, show: { opacity: 1, width: "100%", transition: { duration: 1, ease: "circOut" } } },
+          image: { hidden: { clipPath: "inset(0 100% 0 0)" }, show: { clipPath: "inset(0 0% 0 0)", transition: { duration: 1.5, ease: "easeInOut" } } },
           wrapperClass: ""
         };
       case 11: // Future: "The Dream"
         return {
           container: { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.4 } } },
-          item: { hidden: { opacity: 0 }, show: { opacity: 1, transition: { duration: 1.5 } } },
-          image: { hidden: { opacity: 0, scale: 1.1 }, show: { opacity: 1, scale: 1, transition: { duration: 1.5 } } },
+          item: { hidden: { opacity: 0, textShadow: "0 0 0px rgba(255,255,255,0)" }, show: { opacity: 1, textShadow: "0 0 10px rgba(255,255,255,0.5)", transition: { duration: 1.5 } } },
+          image: { hidden: { opacity: 0, scale: 1.2, filter: "hue-rotate(90deg)" }, show: { opacity: 1, scale: 1, filter: "hue-rotate(0deg)", transition: { duration: 2 } } },
           wrapperClass: ""
         };
-      case 12: // Why Important: "The Heartbeat" -> Changed from maskImage to Stable Scale
+      case 12: // Why Important: "The Heartbeat"
         return {
           container: { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.3 } } },
-          item: { hidden: { opacity: 0, scale: 0.9 }, show: { opacity: 1, scale: 1, transition: { type: "spring", stiffness: 300, damping: 20 } } },
-          image: { hidden: { opacity: 0, scale: 0.95 }, show: { opacity: 1, scale: 1, transition: { duration: 1.2 } } },
+          item: { hidden: { opacity: 0, scale: 0.8 }, show: { opacity: 1, scale: 1, transition: { type: "spring", stiffness: 300, damping: 10 } } },
+          image: { hidden: { opacity: 0, maskImage: "radial-gradient(circle at center, transparent 0%, black 100%)" }, show: { opacity: 1, maskImage: "radial-gradient(circle at center, black 100%, black 100%)", transition: { duration: 1.5 } } },
           wrapperClass: ""
         };
       default: // Conclusion
@@ -136,7 +137,7 @@ const InfoSlide: React.FC<Props> = ({ data, isStatic = false }) => {
         whileInView={isStatic ? undefined : "show"}
         animate={isStatic ? "show" : undefined}
         // Updated viewport settings: triggers earlier (0.1) and only once to prevent re-hiding issues
-        viewport={{ once: true, amount: 0.1, margin: "100px" }}
+        viewport={{ once: true, amount: 0.1 }}
       >
         <div className="w-full h-full relative">
            <img 
@@ -184,7 +185,7 @@ const InfoSlide: React.FC<Props> = ({ data, isStatic = false }) => {
           initial={isStatic ? "show" : "hidden"}
           whileInView={isStatic ? undefined : "show"}
           animate={isStatic ? "show" : undefined}
-          viewport={{ once: true, amount: 0.1 }}
+          viewport={{ once: true, amount: 0.2 }}
           className={`relative max-w-2xl mx-auto md:mx-0 w-full p-8 md:p-16 ${variants.wrapperClass || ''}`}
         >
           {/* Header Area */}

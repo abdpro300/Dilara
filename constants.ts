@@ -25,7 +25,7 @@ export const SLIDES: SlideData[] = [
       "أنا من تركيا"
     ],
     // Updated: Reliable generic traveler image (Sunset/Woman/Travel)
-    image: "https://images.unsplash.com/photo-1504593811423-6dd665756598?q=80&w=1920&auto=format&fit=crop",
+    image: "/IMG_4633.jpg",
     color: "rose"
   },
   {
@@ -115,9 +115,9 @@ export const SLIDES: SlideData[] = [
     image: "", 
     color: "blue",
     galleryImages: [
-      "https://images.unsplash.com/photo-1542051841857-5f90071e7989?q=80&w=1920&auto=format&fit=crop", // Old Harbor / Marina
-      "https://images.unsplash.com/photo-1520255870068-9e584a7e94e5?q=80&w=1920&auto=format&fit=crop", // Kaputas Beach (Turquoise)
-      "https://images.unsplash.com/photo-1568285572628-98442845c485?q=80&w=1920&auto=format&fit=crop"  // Resort/Pool Vibe
+      "/Antalya.jpeg", // Old Harbor / Marina
+      "/Antalya1.jpeg",  // Resort/Pool Vibe
+      "/Antalya2.jpeg"
     ]
   },
   {
@@ -142,9 +142,9 @@ export const SLIDES: SlideData[] = [
     image: "",
     color: "orange",
     galleryImages: [
-      "https://images.unsplash.com/photo-1517260739337-6799d2fb8280?q=80&w=1920&auto=format&fit=crop", // Massive Balloons Sunrise
-      "https://images.unsplash.com/photo-1567203303889-7221074052f7?q=80&w=1920&auto=format&fit=crop", // Carpet/Rug Shop
-      "https://images.unsplash.com/photo-1570701564993-e00652af8aa7?q=80&w=1920&auto=format&fit=crop"  // Fairy Chimneys
+      "kp1.jpeg", // Massive Balloons Sunrise
+      "kp2.jpeg", // Carpet/Rug Shop
+      "kp3.jpeg", // Fairy Chimneys
     ]
   },
   {
@@ -157,7 +157,7 @@ export const SLIDES: SlideData[] = [
       "ذكريات جميلة بالنسبة لي"
     ],
     // Updated: Girne (Kyrenia) Harbour - Specific North Cyprus shot
-    image: "https://images.unsplash.com/photo-1660927763661-d5f00e96030c?q=80&w=1920&auto=format&fit=crop",
+    image: "https://letocoinvestment.com/wp-content/uploads/2023/07/Kyrenia-View-e1689269979734.webp",
     color: "teal",
     coordinates: [35.3364, 33.3184]
   },
@@ -170,9 +170,9 @@ export const SLIDES: SlideData[] = [
     image: "",
     color: "teal",
     galleryImages: [
-      "https://images.unsplash.com/photo-1628198650392-4c28c3127602?q=80&w=1920&auto=format&fit=crop", // Bellapais Abbey Area
-      "https://images.unsplash.com/photo-1533602526233-03e5414f0851?q=80&w=1920&auto=format&fit=crop", // Mediterranean Coast/Sea Caves
-      "https://images.unsplash.com/photo-1523539693393-270a67bd47d5?q=80&w=1920&auto=format&fit=crop"  // Old Stone Streets/Sunny
+      "kn1.jpeg", // Bellapais Abbey Area
+      "kn2.jpeg", // Mediterranean Coast/Sea Caves
+      "kn3.jpeg"  // Old Stone Streets/Sunny
     ]
   },
   {
@@ -196,17 +196,6 @@ export const SLIDES: SlideData[] = [
     ],
     image: "https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?q=80&w=1000&auto=format&fit=crop", // Magical/Experience
     color: "pink"
-  },
-  // --- NEW VIDEO SLIDE INSERTED HERE ---
-  {
-    id: 17,
-    type: 'video',
-    title: "لحظات لا تنسى",
-    bullets: [], // Not used for video slide
-    // Generic aerial view of nature/sea (Placeholder for user video)
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-waves-coming-to-the-beach-5016-large.mp4", 
-    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop", // Fallback poster
-    color: "blue"
   },
   {
     id: 13,

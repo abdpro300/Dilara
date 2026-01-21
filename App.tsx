@@ -5,7 +5,6 @@ import Navigation from './components/Navigation';
 import HeroSection from './components/HeroSection';
 import InfoSlide from './components/InfoSlide';
 import PhotoGallerySlide from './components/PhotoGallerySlide';
-import VideoSlide from './components/VideoSlide';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
@@ -74,12 +73,12 @@ const App: React.FC = () => {
       await document.fonts.ready;
 
       // 3. Wait for all Images inside the hidden container to load
-      const images = Array.from(container.querySelectorAll('img')) as HTMLImageElement[];
+      const images = Array.from(container.querySelectorAll('img'));
       const imagePromises = images.map((img) => {
         if (img.complete) return Promise.resolve();
         return new Promise((resolve) => {
-          img.onload = () => resolve(null);
-          img.onerror = () => resolve(null); // Don't block if one fails
+          img.onload = resolve;
+          img.onerror = resolve; // Don't block if one fails
         });
       });
       await Promise.all(imagePromises);
@@ -167,9 +166,6 @@ const App: React.FC = () => {
     }
     if (slide.type === 'gallery') {
       return <PhotoGallerySlide data={slide} isStatic={isStatic} />;
-    }
-    if (slide.type === 'video') {
-      return <VideoSlide data={slide} isStatic={isStatic} />;
     }
     return <InfoSlide data={slide} isStatic={isStatic} />;
   };

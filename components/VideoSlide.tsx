@@ -51,7 +51,7 @@ const VideoSlide: React.FC<Props> = ({ data, isStatic = false }) => {
 
         <video
             ref={videoRef}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain"
             src={data.videoUrl}
             poster={data.image}
             controls

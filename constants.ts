@@ -197,6 +197,17 @@ export const SLIDES: SlideData[] = [
     image: "https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?q=80&w=1000&auto=format&fit=crop", // Magical/Experience
     color: "pink"
   },
+  // --- NEW VIDEO SLIDE INSERTED HERE ---
+  {
+    id: 17,
+    type: 'video',
+    title: "لحظات لا تنسى",
+    bullets: [], // Not used for video slide
+    // Generic aerial view of nature/sea (Placeholder for user video)
+    videoUrl: "/video.mp4", 
+    image: "/Antalya4.jpeg", // Fallback poster
+    color: "blue"
+  },
   {
     id: 13,
     type: 'conclusion',

@@ -247,6 +247,7 @@ const App: React.FC = () => {
           </section>
         ))}
 
+
         {/* Footer/Contact Info */}
         <div className="fixed bottom-4 left-6 text-xs text-white/30 pointer-events-none z-50 font-mono tracking-widest">
           DILARA_JOURNEY_V2.0
